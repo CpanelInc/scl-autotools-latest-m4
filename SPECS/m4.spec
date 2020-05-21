@@ -5,7 +5,7 @@
 %{?scl:%scl_package m4}
 
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4590 for more details
-%define release_prefix 3
+%define release_prefix 4
 
 Summary: The GNU macro processor
 Name: %{scl_prefix}m4
@@ -82,6 +82,9 @@ fi
 
 
 %changelog
+* Thu May 21 2020 Julian Brown <julian.brown@cpanel.net> - 1.4.17-4
+- ZC-6855: Fix build issues for C8
+
 * Wed Aug 12 2015 Pavel Raiskup <praiskup@redhat.com> - 1.4.17-3
 - use _compat_el5_build only if defined (rhbz#1252751)
 
