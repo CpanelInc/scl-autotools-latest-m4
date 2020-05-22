@@ -9,13 +9,18 @@
 
 Summary: The GNU macro processor
 Name: %{scl_prefix}m4
-Version: 1.4.17
+Version: 1.4.18
 Release: %{release_prefix}%{?dist}.cpanel
 License: GPLv3+
 Group: Applications/Text
 Source0: http://ftp.gnu.org/gnu/m4/m4-%{version}.tar.gz
 Source1: http://ftp.gnu.org/gnu/m4/m4-%{version}.tar.gz.sig
 URL: http://www.gnu.org/software/m4/
+
+%if 0%{?rhel} > 7
+Patch0: 0001-Fix-file-io-libs-for-newer-gnulib.patch
+%endif
+
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
 %ifarch ppc ppc64
@@ -51,9 +56,18 @@ Install m4 if you need a macro processor.
 %setup -q -n m4-%{version}
 chmod 644 COPYING
 
+%if 0%{?rhel} > 7
+%patch0 -p1
+%endif
+
 %build
 %configure
+
 make %{?_smp_mflags}
+
+echo "DEBUG"
+find . -name '*.log' -print
+echo "DEBUG END"
 
 %install
 make install INSTALL="%{__install} -p" DESTDIR=$RPM_BUILD_ROOT
