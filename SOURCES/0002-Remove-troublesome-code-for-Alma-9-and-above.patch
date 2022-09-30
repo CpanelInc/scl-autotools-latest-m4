@@ -1,0 +1,29 @@
+From 49f68e759935482fbcd2ac14165f853798e27814 Mon Sep 17 00:00:00 2001
+From: Julian Brown <julian.brown@cpanel.net>
+Date: Thu, 22 Sep 2022 14:19:46 -0500
+Subject: [PATCH 2/2] Remove troublesome code for Alma 9 and above
+
+---
+ lib/c-stack.c | 6 ------
+ 1 file changed, 6 deletions(-)
+
+diff --git a/lib/c-stack.c b/lib/c-stack.c
+index 5353c08..37bf81e 100644
+--- a/lib/c-stack.c
++++ b/lib/c-stack.c
+@@ -52,12 +52,6 @@ typedef struct sigaltstack stack_t;
+ #endif
+ #ifndef SIGSTKSZ
+ # define SIGSTKSZ 16384
+-#elif HAVE_LIBSIGSEGV && SIGSTKSZ < 16384
+-/* libsigsegv 2.6 through 2.8 have a bug where some architectures use
+-   more than the Linux default of an 8k alternate stack when deciding
+-   if a fault was caused by stack overflow.  */
+-# undef SIGSTKSZ
+-# define SIGSTKSZ 16384
+ #endif
+ 
+ #include <stdlib.h>
+-- 
+2.37.0
+
