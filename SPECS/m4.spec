@@ -5,7 +5,7 @@
 %{?scl:%scl_package m4}
 
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4590 for more details
-%define release_prefix 4
+%define release_prefix 5
 
 Summary: The GNU macro processor
 Name: %{scl_prefix}m4
@@ -19,6 +19,10 @@ URL: http://www.gnu.org/software/m4/
 
 %if 0%{?rhel} > 7
 Patch0: 0001-Fix-file-io-libs-for-newer-gnulib.patch
+%endif
+
+%if 0%{?rhel} >= 9
+Patch1: 0002-Remove-troublesome-code-for-Alma-9-and-above.patch
 %endif
 
 Requires(post): /sbin/install-info
@@ -60,14 +64,16 @@ chmod 644 COPYING
 %patch0 -p1
 %endif
 
+%if 0%{?rhel} >= 9
+%patch1 -p1
+%endif
+
 %build
+set -x 
+
 %configure
 
 make %{?_smp_mflags}
-
-echo "DEBUG"
-find . -name '*.log' -print
-echo "DEBUG END"
 
 %install
 make install INSTALL="%{__install} -p" DESTDIR=$RPM_BUILD_ROOT
@@ -96,6 +102,9 @@ fi
 
 
 %changelog
+* Thu Sep 29 2022 Julian Brown <julian.brown@cpanel.net> - 1.4.17-5
+- ZC-10336: Add changes so that it builds on AlmaLinux 9
+
 * Thu May 21 2020 Julian Brown <julian.brown@cpanel.net> - 1.4.17-4
 - ZC-6855: Fix build issues for C8
 
