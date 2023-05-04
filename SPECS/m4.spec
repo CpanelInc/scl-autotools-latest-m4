@@ -1,3 +1,5 @@
+%define debug_package %{nil}
+
 %{?_compat_el5_build}
 
 %{!?scl:%global scl autotools-latest}
