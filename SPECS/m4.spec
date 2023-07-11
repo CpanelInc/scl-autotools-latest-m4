@@ -1,3 +1,6 @@
+%define debug_package %{nil}
+%define _enable_debug_packages %{nil}
+
 %{?_compat_el5_build}
 
 %{!?scl:%global scl autotools-latest}
@@ -5,7 +8,7 @@
 %{?scl:%scl_package m4}
 
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4590 for more details
-%define release_prefix 5
+%define release_prefix 7
 
 Summary: The GNU macro processor
 Name: %{scl_prefix}m4
@@ -102,6 +105,12 @@ fi
 
 
 %changelog
+* Wed May 17 2023 Julian Brown <julian.brown@cpanel.net> - 1.4.18-7
+- ZC-10950: Fix build problems
+
+* Tue May 09 2023 Brian Mendoza <brian.mendoza@cpanel.net> - 1.4.18-6
+- ZC-10936: Clean up Makefile and remove debug-package-nil
+
 * Thu Sep 29 2022 Julian Brown <julian.brown@cpanel.net> - 1.4.17-5
 - ZC-10336: Add changes so that it builds on AlmaLinux 9
 
