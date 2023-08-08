@@ -8,10 +8,10 @@
 %{?scl:%scl_package m4}
 
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4590 for more details
-%define release_prefix 7
+%define release_prefix 8
 
 Summary: The GNU macro processor
-Name: %{scl_prefix}m4
+Name: autotools-latest-m4
 Version: 1.4.18
 Release: %{release_prefix}%{?dist}.cpanel
 License: GPLv3+
@@ -72,7 +72,7 @@ chmod 644 COPYING
 %endif
 
 %build
-set -x 
+set -x
 
 %configure
 
@@ -105,6 +105,9 @@ fi
 
 
 %changelog
+* Wed Aug 02 2023 Dan Muey <dan@cpanel.net> - 1.4.18-8
+- ZC-11101: Fix unresolvable `Name` (by hard coding it)
+
 * Wed May 17 2023 Julian Brown <julian.brown@cpanel.net> - 1.4.18-7
 - ZC-10950: Fix build problems
 
